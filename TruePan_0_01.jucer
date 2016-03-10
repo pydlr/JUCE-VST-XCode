@@ -4,7 +4,7 @@
               bundleIdentifier="com.iopatterns.TruePan_0_01" includeBinaryInAppConfig="1"
               buildVST="1" buildVST3="1" buildAU="1" buildRTAS="0" buildAAX="0"
               pluginName="TruePan_0_01" pluginDesc="TruePan_0_01" pluginManufacturer="IO PATTERNS"
-              pluginManufacturerCode="TP01" pluginCode="TP01" pluginChannelConfigs="{1,2}"
+              pluginManufacturerCode="TP01" pluginCode="TP01" pluginChannelConfigs="{2,2}"
               pluginIsSynth="0" pluginWantsMidiIn="0" pluginProducesMidiOut="0"
               pluginIsMidiEffectPlugin="0" pluginSilenceInIsSilenceOut="0"
               pluginEditorRequiresKeys="0" pluginAUExportPrefix="TruePan_0_01AU"

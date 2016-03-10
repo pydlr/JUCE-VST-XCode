@@ -12,13 +12,16 @@
 #include "PluginEditor.h"
 
 
+
 //==============================================================================
 TruePan_0_01AudioProcessor::TruePan_0_01AudioProcessor()
 {
+    std::cout << "Hello";  // prints Hello
 }
 
 TruePan_0_01AudioProcessor::~TruePan_0_01AudioProcessor()
 {
+
 }
 
 //==============================================================================
@@ -84,6 +87,7 @@ void TruePan_0_01AudioProcessor::prepareToPlay (double sampleRate, int samplesPe
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+        std::cout << "Hello";  // prints Hello
 }
 
 void TruePan_0_01AudioProcessor::releaseResources()
@@ -100,16 +104,19 @@ void TruePan_0_01AudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBu
     // I've added this to avoid people getting screaming feedback
     // when they first compile the plugin, but obviously you don't need to
     // this code if your algorithm already fills all the output channels.
+    
+    
     for (int i = getNumInputChannels(); i < getNumOutputChannels(); ++i)
         
         buffer.clear (i, 0, buffer.getNumSamples());
 
-    // This is the place where you'd normally do the guts of your plugin's
+    // This is the place  where you'd normally do the guts of your plugin's
     // audio processing...
     for (int channel = 0; channel < getNumInputChannels(); ++channel)
     {
         float* channelData = buffer.getWritePointer (channel);
-
+        //*channelData = channelData[channel] * sliderValue;
+        *channelData = *channelData;
         // ..do something to the data...
     }
 }
@@ -122,7 +129,7 @@ bool TruePan_0_01AudioProcessor::hasEditor() const
 
 AudioProcessorEditor* TruePan_0_01AudioProcessor::createEditor()
 {
-    return new TruePan_0_01AudioProcessorEditor (*this);
+    return new TruePan_0_01AudioProcessorEditor ( *this );
 }
 
 //==============================================================================

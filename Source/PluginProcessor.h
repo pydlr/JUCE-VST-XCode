@@ -16,16 +16,22 @@
 /////////////////
 /////  I/O  / ///
 #include "TruePan.h"
+
 ////////////////
 
 //==============================================================================
 /**
 */
+//      MainComponent                          Component 
 class TruePan_0_01AudioProcessor  : public AudioProcessor
 {
+//TruePan_0_01AudioProcessor = MainComponent in JUCE documentation
 public:
+    ///////// I / O Patterns ///////////////////////////////////////////////////////
+    float sliderValue;
+    ///////// I / O Patterns ///////////////////////////////////////////////////////
     //==============================================================================
-    TruePan_0_01AudioProcessor();
+    TruePan_0_01AudioProcessor(); // MainComponent()
     ~TruePan_0_01AudioProcessor();
 
     //==============================================================================
@@ -45,7 +51,7 @@ public:
     bool producesMidi() const override;
     bool silenceInProducesSilenceOut() const override;
     double getTailLengthSeconds() const override;
-
+ 
     //==============================================================================
     int getNumPrograms() override;
     int getCurrentProgram() override;
