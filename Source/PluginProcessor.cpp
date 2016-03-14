@@ -16,7 +16,9 @@
 //==============================================================================
 TruePan_0_01AudioProcessor::TruePan_0_01AudioProcessor()
 {
-    std::cout << "Hello";  // prints Hello
+    ///////  I/O   ///////////
+    UserParams[Gain] = 0.0;
+    ///////  I/O   ///////////
 }
 
 TruePan_0_01AudioProcessor::~TruePan_0_01AudioProcessor()
@@ -58,7 +60,7 @@ double TruePan_0_01AudioProcessor::getTailLengthSeconds() const
     return 0.0;
 }
 
-int TruePan_0_01AudioProcessor::getNumPrograms()
+int  TruePan_0_01AudioProcessor::getNumPrograms()
 {
     return 1;   // NB: some hosts don't cope very well if you tell them there are 0 programs,
                 // so this should be at least 1, even if you're not really implementing programs.
@@ -98,27 +100,37 @@ void TruePan_0_01AudioProcessor::releaseResources()
 
 void TruePan_0_01AudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
-    // In case we have more outputs than inputs, this code clears any output
-    // channels that didn't contain input data, (because these aren't
-    // guaranteed to be empty - they may contain garbage).
-    // I've added this to avoid people getting screaming feedback
-    // when they first compile the plugin, but obviously you don't need to
-    // this code if your algorithm already fills all the output channels.
     
-    
-    for (int i = getNumInputChannels(); i < getNumOutputChannels(); ++i)
+    for(int i = getNumInputChannels(); i < getNumOutputChannels(); i++){
         
-        buffer.clear (i, 0, buffer.getNumSamples());
-
-    // This is the place  where you'd normally do the guts of your plugin's
-    // audio processing...
-    for (int channel = 0; channel < getNumInputChannels(); ++channel)
-    {
-        float* channelData = buffer.getWritePointer (channel);
-        //*channelData = channelData[channel] * sliderValue;
-        *channelData = *channelData;
-        // ..do something to the data...
+        buffer.clear(i, 0, buffer.getNumSamples()); // causing noise!!!!!!!!!!!!!!!!!!
+        
     }
+    
+    int numberOfChannels = getNumInputChannels();
+    
+    if (numberOfChannels == 2){
+        
+        // samples0 = Right, samples1 = Left
+        float* samples0 = buffer.getWritePointer(0);
+        float* samples1 = buffer.getWritePointer(1);
+        
+        
+        int numSamples = buffer.getNumSamples();
+        
+        while (numSamples > 0){
+            
+            *samples0++ *= sliderValue/128;
+            *samples1++ *= sliderValue/128;
+            numSamples--;
+            
+            
+            
+        }
+        
+    }   
+    
+
 }
 
 //==============================================================================
