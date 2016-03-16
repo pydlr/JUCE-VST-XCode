@@ -4,7 +4,7 @@
               bundleIdentifier="com.iopatterns.TruePan_0_01" includeBinaryInAppConfig="1"
               buildVST="1" buildVST3="1" buildAU="1" buildRTAS="0" buildAAX="0"
               pluginName="TruePan_0_01" pluginDesc="TruePan_0_01" pluginManufacturer="IO PATTERNS"
-              pluginManufacturerCode="TP01" pluginCode="TP01" pluginChannelConfigs="{1,2}"
+              pluginManufacturerCode="TP01" pluginCode="TP01" pluginChannelConfigs="{2,2}"
               pluginIsSynth="0" pluginWantsMidiIn="0" pluginProducesMidiOut="0"
               pluginIsMidiEffectPlugin="0" pluginSilenceInIsSilenceOut="0"
               pluginEditorRequiresKeys="0" pluginAUExportPrefix="TruePan_0_01AU"
@@ -15,14 +15,14 @@
     <GROUP id="{AA15EA19-77F5-EE83-87A3-414537BA28A6}" name="Source">
       <GROUP id="{30F7A604-4613-7D4A-4547-3A311A3AD01A}" name="TruePanPlugin"/>
       <FILE id="vD6yPm" name="TruePan.cpp" compile="1" resource="0" file="Source/TruePan.cpp"/>
-      <FILE id="cb0bwM" name="TruePan.h" compile="0" resource="0" file="Source/TruePan.h"/>
+      <FILE id="cb0bwM" name="TruePan.h" compile="1" resource="0" file="Source/TruePan.h"/>
       <FILE id="DqhXvh" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
-      <FILE id="GbZ3Oh" name="PluginProcessor.h" compile="0" resource="0"
+      <FILE id="GbZ3Oh" name="PluginProcessor.h" compile="1" resource="0"
             file="Source/PluginProcessor.h"/>
       <FILE id="T5jXkk" name="PluginEditor.cpp" compile="1" resource="0"
             file="Source/PluginEditor.cpp"/>
-      <FILE id="RM5LT4" name="PluginEditor.h" compile="0" resource="0" file="Source/PluginEditor.h"/>
+      <FILE id="RM5LT4" name="PluginEditor.h" compile="1" resource="0" file="Source/PluginEditor.h"/>
     </GROUP>
   </MAINGROUP>
   <EXPORTFORMATS>
