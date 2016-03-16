@@ -18,6 +18,7 @@ TruePan_0_01AudioProcessor::TruePan_0_01AudioProcessor()
 {
     ///////  I/O   ///////////
     UserParams[Gain] = 0.0;
+    
     ///////  I/O   ///////////
 }
 
@@ -89,7 +90,7 @@ void TruePan_0_01AudioProcessor::prepareToPlay (double sampleRate, int samplesPe
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
-        std::cout << "Hello";  // prints Hello
+    
 }
 
 void TruePan_0_01AudioProcessor::releaseResources()
@@ -101,35 +102,35 @@ void TruePan_0_01AudioProcessor::releaseResources()
 void TruePan_0_01AudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
     
+    //numInputs = getNumInputChannels();
+    numInputs = buffer.getNumSamples();
+    
     for(int i = getNumInputChannels(); i < getNumOutputChannels(); i++){
         
-        buffer.clear(i, 0, buffer.getNumSamples()); // causing noise!!!!!!!!!!!!!!!!!!
+        //buffer.clear(i, 0, buffer.getNumSamples()); // causing noise!!!!!!!!!!!!!!!!!!
         
     }
     
-    int numberOfChannels = getNumInputChannels();
+    int numberOfChannels =  getNumInputChannels();    
     
     if (numberOfChannels == 2){
         
         // samples0 = Right, samples1 = Left
         float* samples0 = buffer.getWritePointer(0);
-        float* samples1 = buffer.getWritePointer(1);
-        
+        float* samples1 = buffer.getWritePointer(1);        
         
         int numSamples = buffer.getNumSamples();
         
         while (numSamples > 0){
             
-            *samples0++ *= sliderValue/128;
-            *samples1++ *= sliderValue/128;
+            // Simple Gain Control
+            *samples0++ *= sliderValue;
+            *samples1++ *= sliderValue;
             numSamples--;
-            
-            
-            
+                       
         }
         
-    }   
-    
+    }       
 
 }
 

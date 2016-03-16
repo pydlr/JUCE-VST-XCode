@@ -28,6 +28,8 @@ class TruePan_0_01AudioProcessor  : public AudioProcessor
 public:
     ///////// I / O Patterns ///////////////////////////////////////////////////////
     float sliderValue;
+    float numInputs;
+    float w[513];
     ///////// I / O Patterns ///////////////////////////////////////////////////////
     //==============================================================================
     TruePan_0_01AudioProcessor(); // MainComponent()
