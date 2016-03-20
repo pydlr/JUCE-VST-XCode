@@ -121,17 +121,17 @@ void TruePan_0_01AudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBu
         float* samples1 = buffer.getWritePointer(1);
         
         int n = 0;
-        
-        
-        
+
         while (n < buffer.getNumSamples())
         {
+            
+            delayL = ndelay + delaySamplesPtr[0];
+            delayR = ndelay + delaySamplesPtr[1];
             
             bufferDelayL[ndelay] = samples1[n];
             bufferDelayR[ndelay] = samples0[n];
             
-            delayL = ndelay + delaySamplesPtr[0];
-            delayR = ndelay + delaySamplesPtr[1];
+            
             // Somewhere here it will overflow if delaySamplesPtr[] is larger than bufferDelayL.size or R
             if (delayL > 1023)//Buffer size. TODO: abstract.
             {
