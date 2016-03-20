@@ -13,6 +13,7 @@
 
 
 
+
 //==============================================================================
 TruePan_0_01AudioProcessor::TruePan_0_01AudioProcessor()
 {
@@ -90,6 +91,7 @@ void TruePan_0_01AudioProcessor::prepareToPlay (double sampleRate, int samplesPe
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+    mSampleRate = getSampleRate();
     
 }
 
@@ -101,9 +103,7 @@ void TruePan_0_01AudioProcessor::releaseResources()
 
 void TruePan_0_01AudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBuffer& midiMessages)
 {
-    
-    //numInputs = getNumInputChannels();
-    numInputs = buffer.getNumSamples();
+
     
     for(int i = getNumInputChannels(); i < getNumOutputChannels(); i++){
         
@@ -111,26 +111,56 @@ void TruePan_0_01AudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBu
         
     }
     
-    int numberOfChannels =  getNumInputChannels();    
+    int numberOfChannels =  getNumInputChannels();
     
-    if (numberOfChannels == 2){
-        
+    
+    if (numberOfChannels == 2)
+    {
         // samples0 = Right, samples1 = Left
         float* samples0 = buffer.getWritePointer(0);
-        float* samples1 = buffer.getWritePointer(1);        
+        float* samples1 = buffer.getWritePointer(1);
         
-        int numSamples = buffer.getNumSamples();
+        int n = 0;
         
-        while (numSamples > 0){
+        
+        
+        while (n < buffer.getNumSamples())
+        {
             
-            // Simple Gain Control
-            *samples0++ *= sliderValue;
-            *samples1++ *= sliderValue;
-            numSamples--;
-                       
+            bufferDelayL[ndelay] = samples1[n];
+            bufferDelayR[ndelay] = samples0[n];
+            
+            delayL = ndelay + delaySamplesPtr[0];
+            delayR = ndelay + delaySamplesPtr[1];
+            // Somewhere here it will overflow if delaySamplesPtr[] is larger than bufferDelayL.size or R
+            if (delayL > 1023)//Buffer size. TODO: abstract.
+            {
+                delayL -= 1023;
+            }
+            if (delayR > 1023)
+            {
+                delayR -= 1023;
+            }
+            
+            // Actual output
+            //*samples1++ = bufferDelayL[delayL];
+            //*samples0++ = bufferDelayR[delayR];
+            samples1[n] = bufferDelayL[delayL];
+            samples0[n] = bufferDelayR[delayR];
+            
+            ndelay++;
+            n++;
+            
+            if (ndelay > 1023)//bufferDelayL.size())
+            {
+                
+                ndelay = 0;
+                
+            }
+            
         }
         
-    }       
+    }
 
 }
 

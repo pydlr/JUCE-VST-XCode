@@ -23,7 +23,10 @@
 //[Headers]     -- You can add your own extra header files here --
 #include "JuceHeader.h"
 #include "PluginProcessor.h"
-
+/////////////////
+/////  I/O  / ///
+#include "TruePan.h"
+////////////////
 //[/Headers]
 
 
@@ -63,13 +66,13 @@ public:
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
-    //TruePan_0_01AudioProcessor& ownerFilter;
-    //TruePan_0_01AudioProcessor& processor;
+    TruePan mTruePan;
     //[/UserVariables]
 
     //==============================================================================
     ScopedPointer<Slider> slider;
     ScopedPointer<Label> label;
+    ScopedPointer<Label> label2;
     Image cachedImage__1_jpg_1;
 
 

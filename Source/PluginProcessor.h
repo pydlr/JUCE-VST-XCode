@@ -13,10 +13,7 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
-/////////////////
-/////  I/O  / ///
-#include "TruePan.h"
-////////////////
+#include <array>
 
 //==============================================================================
 /**
@@ -27,9 +24,21 @@ class TruePan_0_01AudioProcessor  : public AudioProcessor
 //TruePan_0_01AudioProcessor = MainComponent in JUCE documentation
 public:
     ///////// I / O Patterns ///////////////////////////////////////////////////////
+    int delayL;
+    int delayR;
+    
     float sliderValue;
     float numInputs;
-    float w[513];
+    float nSamplesDelay;
+    float delaySamples[2] = {};
+    float* delaySamplesPtr = delaySamples;
+    //std::array<float,1024> bufferDelayL = {};//Initialise to 0
+    //std::array<float,1024> bufferDelayR = {};
+    float bufferDelayL[1024] = {0};
+    float bufferDelayR[1024] = {0};
+    int ndelay = 0;
+    //float bufferDelayR[1024];
+    float mSampleRate;
     ///////// I / O Patterns ///////////////////////////////////////////////////////
     //==============================================================================
     TruePan_0_01AudioProcessor(); // MainComponent()
@@ -76,8 +85,7 @@ private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (TruePan_0_01AudioProcessor)
     
-    
-    
+       
     
     bool NeedsUIUpdate(){return UIUpdateFlag;};
     void RequestUIUpdate(){UIUpdateFlag=true;};
@@ -85,7 +93,7 @@ private:
     private:
     //Private Data, helper methods etc.
     float UserParams[totalNumParam];
-    TruePan mWidthControl;
+    
     bool UIUpdateFlag; 
     
 };
