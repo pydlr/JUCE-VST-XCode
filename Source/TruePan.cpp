@@ -41,8 +41,11 @@ void TruePan::ClockProcess(float* LeftSample, float* RightSample)
 
 float *TruePan::ComputeDelay(float pos, float SR)
 {
+    // Convert to radians.
     pos = ((pos+270) * 2 * M_PI) / (360);
+     
     float* pointer;//TODO: Abstract
+    
     //TODO:These values must be defined prior to this. Only for test defined here
     float radious = 1.0;//TODO: Abstract
     

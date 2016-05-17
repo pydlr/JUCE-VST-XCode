@@ -11,7 +11,13 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
+#include <stdio.h>
+#include <stdlib.h>
 
+#include <iomanip>
+#include <locale>
+#include <sstream>
+#include <string> // this should be already included in <sstream>
 
 
 //==============================================================================
@@ -71,6 +77,7 @@ int  TruePan_0_01AudioProcessor::getNumPrograms()
 int TruePan_0_01AudioProcessor::getCurrentProgram()
 {
     return 0;
+    
 }
 
 void TruePan_0_01AudioProcessor::setCurrentProgram (int index)
@@ -127,26 +134,47 @@ void TruePan_0_01AudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBu
             
             delayL = ndelay + delaySamplesPtr[0];
             delayR = ndelay + delaySamplesPtr[1];
+
+            //itoa (n,buffer,10);
+            //String s = String(itoa(3));
+            //std::string s = SSTR( 3 );
+            //printf(string(itoa(3)));
             
-            bufferDelayL[ndelay] = samples1[n];
-            bufferDelayR[ndelay] = samples0[n];
-            
+            bufferDelayL[delayL] = samples1[n];
+            bufferDelayR[delayR] = samples0[n];
             
             // Somewhere here it will overflow if delaySamplesPtr[] is larger than bufferDelayL.size or R
             if (delayL > 1023)//Buffer size. TODO: abstract.
             {
-                delayL -= 1023;
+                delayL -= 1024;
             }
             if (delayR > 1023)
             {
-                delayR -= 1023;
+                delayR -= 1024;
             }
             
+            printf ("delaySamplesPtr 0: %d \n", delaySamplesPtr[0]);
+            printf ("delaySamplesPtr 1: %d \n", delaySamplesPtr[1]);
+            
+            printf ("delayL 2: %d \n", delayL);
+            printf ("delayR 3: %d \n", delayR);
+            
+            printf ("ndelay 4: %d \n", ndelay);
+            printf ("n 5: %d \n", n);
+            printf ("buffer.getNumSamples 6: %d \n", buffer.getNumSamples());
+            
+            
+             if ((ndelay > 1023)||(ndelay < 0))//bufferDelayL.size())
+            {
+                
+                ndelay = 0;
+                
+            }
             // Actual output
             //*samples1++ = bufferDelayL[delayL];
             //*samples0++ = bufferDelayR[delayR];
-            samples1[n] = bufferDelayL[delayL];
-            samples0[n] = bufferDelayR[delayR];
+            samples1[n] = bufferDelayL[ndelay];
+            samples0[n] = bufferDelayR[ndelay];
             
             ndelay++;
             n++;
@@ -163,6 +191,7 @@ void TruePan_0_01AudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBu
     }
 
 }
+
 
 //==============================================================================
 bool TruePan_0_01AudioProcessor::hasEditor() const
