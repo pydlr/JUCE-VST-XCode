@@ -13,6 +13,8 @@
 #include <math.h>
 #include "TruePan.h"
 
+#include <iomanip>
+
 TruePan::TruePan(){SetWidth(1.0f);}
 TruePan::~TruePan(){}
 
@@ -39,7 +41,7 @@ void TruePan::ClockProcess(float* LeftSample, float* RightSample)
 }
 
 
-float *TruePan::ComputeDelay(float pos, float SR)
+int *TruePan::ComputeDelay(float pos, float SR)
 {
     // Convert to radians.
     pos = ((pos+270) * 2 * M_PI) / (360);
@@ -65,8 +67,13 @@ float *TruePan::ComputeDelay(float pos, float SR)
     float d2 = sqrt(pow(xs-x2,2)+pow(ys-y2,2));
     
     // number of samples to delay 
-    nSamples[0] = SR * (d1/343);
-    nSamples[1] = SR * (d2/343);
+    nSamples[0] = (int)(SR * (d1/343));
+    nSamples[1] = (int)(SR * (d2/343));
+    
+    printf("nsamples 0 %d /n", nSamples[0]);
+    printf("nsamples 1 %d /n", nSamples[0]);
+    //printf("nsamples 0 %f /n", nSamples[0]);
+    //printf("nsamples 1 %f /n", nSamples[0]);
     
     // Only use as much delay as there is inbetween channels. 
     if(nSamples[0] >= nSamples[1])
@@ -80,7 +87,7 @@ float *TruePan::ComputeDelay(float pos, float SR)
         nSamples[0] = 0;
     }
     
-    pointer = nSamples;
+    //pointer = nSamples;
     
     return nSamples;
 }

@@ -26,17 +26,17 @@ public:
     ///////// I / O Patterns ///////////////////////////////////////////////////////
     int delayL;
     int delayR;
-    
-    float sliderValue;
+    int ndelay = 0;
+    //float sliderValue;
     float numInputs;
-    float nSamplesDelay;
-    float delaySamples[2] = {};
-    float* delaySamplesPtr = delaySamples;
+    //float nSamplesDelay;
+    int delaySamples[2] = {};
+    int* delaySamplesPtr = delaySamples;
     //std::array<float,1024> bufferDelayL = {};//Initialise to 0
     //std::array<float,1024> bufferDelayR = {};
     float bufferDelayL[1024] = {0};
     float bufferDelayR[1024] = {0};
-    int ndelay = 0;
+    
     //float bufferDelayR[1024];
     float mSampleRate;
     ///////// I / O Patterns ///////////////////////////////////////////////////////

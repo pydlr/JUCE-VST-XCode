@@ -28,8 +28,8 @@ public:
     //Parameters
     void SetWidth(float width);
     //float* ComputeDelay(float pos, float SR);
-    float *ComputeDelay(float pos, float SR);
-    float nSamples[2] = {0};
+    int *ComputeDelay(float pos, float SR);
+    int nSamples[2] = {0};
     float Getwidth(void){return m_width;};
     float GetDelay(void){return m_delay;};
 

@@ -128,17 +128,26 @@ void TruePan_0_01AudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBu
         float* samples1 = buffer.getWritePointer(1);
         
         int n = 0;
+        
+        int delaySampleL = 0;
+        int delaySampleR = 0;
 
         while (n < buffer.getNumSamples())
         {
             
-            delayL = ndelay + delaySamplesPtr[0];
+            int ndelay1 = (int)ndelay;
+            
+            delaySampleL = delaySamplesPtr[0];
+            delaySampleR = delaySamplesPtr[1];
+            
             delayR = ndelay + delaySamplesPtr[1];
-
-            //itoa (n,buffer,10);
-            //String s = String(itoa(3));
-            //std::string s = SSTR( 3 );
-            //printf(string(itoa(3)));
+            //delayL = ndelay + delaySamplesPtr[0];
+            //
+            //delayL = ndelay + delaySampleL;
+            //delayR = ndelay + delaySampleR;
+            //delayL = ndelay + 0;
+            //delayR = ndelay + 0;
+            
             
             bufferDelayL[delayL] = samples1[n];
             bufferDelayR[delayR] = samples0[n];
@@ -153,38 +162,56 @@ void TruePan_0_01AudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBu
                 delayR -= 1024;
             }
             
-            printf ("delaySamplesPtr 0: %d \n", delaySamplesPtr[0]);
-            printf ("delaySamplesPtr 1: %d \n", delaySamplesPtr[1]);
+            printf("Inside condition start/////////// \n");
+                
+                printf ("delaySamplesPtr 0: %d \n", delaySamplesPtr[0]);
+                printf ("delaySamplesPtr 1: %d \n", delaySamplesPtr[1]);
+                printf ("delaySamplesPtr 0: %f \n", delaySamplesPtr[0]);
+                printf ("delaySamplesPtr 1: %f \n", delaySamplesPtr[1]);
             
-            printf ("delayL 2: %d \n", delayL);
-            printf ("delayR 3: %d \n", delayR);
+                printf ("delayL 2: %d \n", delayL);
+                printf ("delayR 3: %d \n", delayR);
             
-            printf ("ndelay 4: %d \n", ndelay);
-            printf ("n 5: %d \n", n);
-            printf ("buffer.getNumSamples 6: %d \n", buffer.getNumSamples());
+                printf ("ndelay 4: %d \n", ndelay);
+                printf ("n 5: %d \n", n);
+                printf ("buffer.getNumSamples 6: %d \n", buffer.getNumSamples());
+                printf("Inside condition stop/////////// \n");
             
             
              if ((ndelay > 1023)||(ndelay < 0))//bufferDelayL.size())
             {
+                printf("Inside condition START/////////// \n");
                 
+                printf ("delaySamplesPtr 0: %d \n", delaySamplesPtr[0]);
+                printf ("delaySamplesPtr 1: %d \n", delaySamplesPtr[1]);
+                printf ("delaySamplesPtr 0: %f \n", delaySamplesPtr[0]);
+                printf ("delaySamplesPtr 1: %f \n", delaySamplesPtr[1]);
+            
+                printf ("delayL 2: %d \n", delayL);
+                printf ("delayR 3: %d \n", delayR);
+            
+                printf ("ndelay 4: %d \n", ndelay);
+                printf ("n 5: %d \n", n);
+                printf ("buffer.getNumSamples 6: %d \n", buffer.getNumSamples());
+                printf("Inside condition STOP/////////// \n");
                 ndelay = 0;
                 
             }
             // Actual output
             //*samples1++ = bufferDelayL[delayL];
             //*samples0++ = bufferDelayR[delayR];
-            samples1[n] = bufferDelayL[ndelay];
-            samples0[n] = bufferDelayR[ndelay];
+            samples1[n] = bufferDelayL[ndelay1];
+            samples0[n] = bufferDelayR[ndelay1];
             
             ndelay++;
-            n++;
-            
             if (ndelay > 1023)//bufferDelayL.size())
             {
                 
                 ndelay = 0;
                 
             }
+            
+            n++;
             
         }
         
