@@ -124,8 +124,14 @@ void TruePan_0_01AudioProcessor::processBlock (AudioSampleBuffer& buffer, MidiBu
     if (numberOfChannels == 2)
     {
         // samples0 = Right, samples1 = Left
-        float* samples0 = buffer.getWritePointer(0);
-        float* samples1 = buffer.getWritePointer(1);
+        /*** revisar si getWritePointer regresa un float*  ***/
+        //float* samples0 = buffer.getWritePointer(0);
+        //float* samples1 = buffer.getWritePointer(1);
+        float* samples0; 
+        float* samples1; 
+
+        samples0 = buffer.getWritePointer(0);
+        samples1 = buffer.getWritePointer(1);
         
         int n = 0;
         
